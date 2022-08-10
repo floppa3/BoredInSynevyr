@@ -37,10 +37,13 @@ def save_balance():
 
 def load_balance():
     global Debit_UAH, Debit_USD, Debit_UAH_original, Debit_USD_original
-    with open(".balance", "r") as f:
-        data = json.loads(f.read())
-        Debit_USD = Debit_USD_original = data['Debit_USD']
-        Debit_UAH = Debit_UAH_original = data['Debit_UAH']
+    try:
+        with open(".balance", "r") as f:
+            data = json.loads(f.read())
+            Debit_USD = Debit_USD_original = data['Debit_USD']
+            Debit_UAH = Debit_UAH_original = data['Debit_UAH']
+    except:
+        pass
 
 def main():
     load_balance()
