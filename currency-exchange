@@ -1,0 +1,82 @@
+#!/bin/env python
+
+import json
+
+Debit_USD = 10
+Debit_UAH = 10000
+Debit_USD_original = Debit_USD
+Debit_UAH_original = Debit_UAH
+
+Rate_UAHtoUSD = 36.570
+Rate_USDtoUAH = 36.930
+
+def sell_USD(X):
+    global Debit_UAH, Debit_USD
+    hryvnas = X * Rate_UAHtoUSD
+    if hryvnas > Debit_UAH:
+        print("Sorry we don't have enough UAH")
+    else:
+        Debit_UAH = Debit_UAH - hryvnas
+        Debit_USD = Debit_USD + X
+        print("Here's your %.2f UAH" % (hryvnas))
+
+def buy_USD(X):
+    global Debit_UAH, Debit_USD
+    if X > Debit_USD:
+        print("Sorry we don't have enough USD")
+    else:
+        hryvnas = X * Rate_USDtoUAH
+        Debit_USD = Debit_USD - X
+        Debit_UAH = Debit_UAH + hryvnas
+        print("Here's your %.2f USD" % (X))
+
+
+def save_balance():
+    with open(".balance", "w") as f:
+        print(json.dumps({'Debit_UAH': Debit_UAH, 'Debit_USD': Debit_USD}), file=f)
+
+def load_balance():
+    global Debit_UAH, Debit_USD, Debit_UAH_original, Debit_USD_original
+    with open(".balance", "r") as f:
+        data = json.loads(f.read())
+        Debit_USD = Debit_USD_original = data['Debit_USD']
+        Debit_UAH = Debit_UAH_original = data['Debit_UAH']
+
+def main():
+    load_balance()
+    print("We start with %.2f USD and %.2f UAH" % (Debit_USD, Debit_UAH))
+    while True:
+        print()
+        Req = input("What would you like to do? (S)ell USD, or (B)uy USD? ")
+
+        if Req == 's':
+            Amount = input("How much USD you want to sell? ")
+            try:
+                ValidAmount = int(Amount)
+            except:
+                print("This is not a valid amount. Try again.")
+            sell_USD(ValidAmount)
+
+        elif Req == 'b':
+            Amount = input("How much USD you want to buy? ")
+            try:
+                ValidAmount = int(Amount)
+            except:
+                print("This is not a valid amount. Try again.")
+            buy_USD(ValidAmount)
+
+        elif Req == 'a':
+            print("We have %.2f USD and %.2f UAH" % (Debit_USD, Debit_UAH))
+        elif Req == 'q':
+            if Debit_USD > Debit_USD_original:
+                print("Bye. Today we bought %.2f USD." % (Debit_USD - Debit_USD_original))
+            else:
+                print("Bye. Today we sold %.2f USD." % (Debit_USD_original - Debit_USD))
+            save_balance()
+            break
+        else:
+            print("Sorry, what did you mean?")
+
+
+if __name__ == '__main__':
+    main()
