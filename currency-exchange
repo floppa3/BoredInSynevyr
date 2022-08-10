@@ -50,7 +50,7 @@ def main():
         Req = input("What would you like to do? (S)ell USD, or (B)uy USD? ")
 
         if Req == 's':
-            Amount = input("How much USD you want to sell? ")
+            Amount = input("How much USD do you want to sell? ")
             try:
                 ValidAmount = int(Amount)
             except:
@@ -58,7 +58,7 @@ def main():
             sell_USD(ValidAmount)
 
         elif Req == 'b':
-            Amount = input("How much USD you want to buy? ")
+            Amount = input("How much USD do you want to buy? ")
             try:
                 ValidAmount = int(Amount)
             except:
