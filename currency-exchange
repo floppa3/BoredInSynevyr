@@ -50,7 +50,7 @@ def main():
     print("We start with %.2f USD and %.2f UAH" % (Debit_USD, Debit_UAH))
     while True:
         print()
-        Req = input("What would you like to do? (S)ell USD, or (B)uy USD? ")
+        Req = input("What would you like to do? (S)ell USD, or (B)uy USD (H for help)? ")
 
         if Req == 's':
             Amount = input("How much USD do you want to sell? ")
@@ -77,6 +77,8 @@ def main():
                 print("Bye. Today we sold %.2f USD." % (Debit_USD_original - Debit_USD))
             save_balance()
             break
+        elif Req == 'h':
+            print("(B)uy, (S)ell, (A) print balance, (Q)uit")
         else:
             print("Sorry, what did you mean?")
 
