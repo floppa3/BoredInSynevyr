@@ -55,7 +55,7 @@ def main():
         if Req == 's':
             Amount = input("How much USD do you want to sell? ")
             try:
-                ValidAmount = int(Amount)
+                ValidAmount = float(Amount)
             except:
                 print("This is not a valid amount. Try again.")
             sell_USD(ValidAmount)
@@ -63,7 +63,7 @@ def main():
         elif Req == 'b':
             Amount = input("How much USD do you want to buy? ")
             try:
-                ValidAmount = int(Amount)
+                ValidAmount = float(Amount)
             except:
                 print("This is not a valid amount. Try again.")
             buy_USD(ValidAmount)
